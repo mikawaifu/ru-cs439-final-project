@@ -14,20 +14,20 @@ Installation
 pip install -r requirements.txt
 
 Configuration
-1. Device Setup
+Device Setup
 
 Edit configs/base.yaml:
 
-device: "cuda"   # or "cpu"
+device: "cuda"  # or "cpu"
 
-2. API Keys
+API Keys
 
 Copy .env.example to .env and add your keys:
 
 OPENAI_API_KEY=sk-...
-# XAI_API_KEY=...
+XAI_API_KEY=...
 
-3. Model Settings
+Model Settings
 
 Edit configs/models.yaml:
 
@@ -39,7 +39,7 @@ generators:
   ollama_mistral:
     enabled: false
 
-4. Verifier Model
+Verifier Model
 verifier:
   backbone: "microsoft/deberta-v3-base"
   batch_size: 32
@@ -52,26 +52,33 @@ Step 2: Run full pipeline
 make test-quick
 
 Step-by-Step Usage
-1. Generate candidates
+Generate candidates
 python -m src.legaladapter.gen.generate --split test
 
-2. Train verifier
+Train verifier
 python -m src.legaladapter.verify.train
 
-3. Score and rerank
+Score and rerank
 python -m src.legaladapter.verify.infer --split test
 python -m src.legaladapter.rank.rerank --split test
 
-4. Evaluate
+Evaluate
 python -m src.legaladapter.eval.evaluate --split test
 
 Outputs
 
 Results are saved in artifacts/:
 
-artifacts/results/results_table_test.csv
+artifacts/
+  results/
+    results_table_test.csv
+    coliee_task4_test_predictions.json
+  verifier/
+    best_model.pt
 
-artifacts/results/coliee_task4_test_predictions.json
+License
+
+MIT License. See LICENSE for details.
 
 artifacts/verifier/best_model.pt
 
