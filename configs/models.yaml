@@ -1,0 +1,70 @@
+# Model configuration for LegalAdapter
+
+generators:
+  openai_gpt4o:
+    enabled: true
+    provider: "openai"
+    model: "gpt-4o"
+    api_key_env: "OPENAI_API_KEY"
+    api_base_env: "OPENAI_API_BASE"
+    max_tokens: 256
+    temperature: 0.8
+    top_p: 0.95
+    
+  xai_grok2:
+    enabled: true
+    provider: "xai"
+    model: "grok-2"
+    api_key_env: "XAI_API_KEY"
+    api_base_env: "XAI_API_BASE"
+    max_tokens: 256
+    temperature: 0.8
+    top_p: 0.95
+    
+  vllm_llama3:
+    enabled: true
+    provider: "vllm"
+    endpoint_env: "VLLM_ENDPOINT"
+    model: "meta-llama/Meta-Llama-3-8B-Instruct"
+    max_tokens: 256
+    temperature: 0.8
+    top_p: 0.95
+    
+  ollama_mistral:
+    enabled: false
+    provider: "ollama"
+    host_env: "OLLAMA_HOST"
+    model: "mistral:instruct"
+    max_tokens: 256
+    temperature: 0.8
+    top_p: 0.95
+
+verifier:
+  backbone: "microsoft/deberta-v3-base"  # or "roberta-base", "bert-base-uncased"
+  max_length: 512
+  pooling: "cls"  # "cls" or "mean"
+  
+  # Training hyperparameters
+  learning_rate: 3e-5
+  batch_size: 32
+  eval_batch_size: 64
+  num_epochs: 4
+  warmup_ratio: 0.1
+  weight_decay: 0.01
+  
+  # Early stopping
+  early_stopping_patience: 2
+  early_stopping_metric: "auc"
+  
+  # Optimizer
+  optimizer: "adamw"
+  scheduler: "linear"
+  
+  # Mixed precision
+  fp16: true
+  
+  # Output
+  save_dir: "artifacts/verifier"
+  checkpoint_dir: "artifacts/verifier/checkpoints"
+
+

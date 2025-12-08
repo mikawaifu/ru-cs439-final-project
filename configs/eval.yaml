@@ -1,0 +1,64 @@
+# Evaluation configuration for LegalAdapter
+
+metrics:
+  - accuracy
+  - f1
+  - auc_verifier
+  - hallucination_rate
+
+# Accuracy settings
+accuracy:
+  strict: true  # For binary QA (YES/NO), require exact match
+  case_sensitive: false
+  
+# F1 settings (for open QA)
+f1:
+  tokenize: "whitespace"  # "whitespace" or "word_tokenize"
+  lowercase: true
+  remove_punctuation: true
+  
+# Hallucination detection settings
+hallucination:
+  enabled: true
+  check_context_grounding: true  # Check if answer uses facts from context
+  check_fabricated_citations: true  # Check for fake case citations
+  fabrication_patterns:
+    - 'v\.\s+[A-Z][a-z]+\s+\(\d{4}\)'  # e.g., "v. State (2020)"
+    - '[A-Z][a-z]+\s+v\.\s+[A-Z][a-z]+'  # e.g., "Doe v. Smith"
+  min_confidence: 0.7  # Minimum confidence to mark as hallucination
+  
+# Verifier AUC settings
+auc_verifier:
+  bootstrap: true  # Use bootstrap for confidence intervals
+  n_bootstrap: 1000
+  confidence_level: 0.95
+
+# Report generation
+report:
+  tables: true
+  plots: true
+  output_dir: "artifacts/results"
+  figures_dir: "artifacts/figures"
+  
+  # Table formats
+  table_formats:
+    - "csv"
+    - "latex"
+    - "markdown"
+  
+  # Plots to generate
+  plots_list:
+    - "score_distribution"  # Histogram of verifier scores
+    - "roc_curve"          # ROC curve for verifier
+    - "accuracy_by_dataset" # Bar chart of accuracy per dataset
+    - "threshold_analysis"  # Accuracy vs. abstain threshold
+
+# Comparison settings
+comparison:
+  baselines:
+    - "random_selection"    # Random candidate selection
+    - "first_candidate"     # Always use first candidate
+    - "majority_vote"       # Majority vote among candidates
+  include_oracle: true      # Oracle: always pick best candidate (upper bound)
+
+

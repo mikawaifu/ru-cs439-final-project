@@ -1,0 +1,27 @@
+# Base configuration for LegalAdapter
+
+# Reproducibility
+seed: 42
+
+# Device configuration
+device: "cuda"  # "cuda" or "cpu"
+
+# Candidate generation
+k_candidates: 5
+max_new_tokens: 256
+temperature: 0.8
+top_p: 0.95
+
+# Re-ranking
+abstain_threshold: 0.5  # Minimum verifier score to provide an answer
+
+# Output
+output_dir: "artifacts"
+log_dir: "artifacts/logs"
+save_intermediate: true  # Save candidates before scoring
+
+# Logging
+log_level: "INFO"
+log_format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+

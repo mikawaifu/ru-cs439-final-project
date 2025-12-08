@@ -1,0 +1,71 @@
+# Dataset configuration for LegalAdapter
+
+root: "data"
+processed_dir: "data/processed"
+raw_dir: "data/raw"
+
+datasets:
+  coliee_task4:
+    enabled: true
+    name: "COLIEE Task 4"
+    description: "Legal Question Answering (YES/NO)"
+    source: "MANUAL_OR_URL"
+    official_info: "COLIEE (Competition on Legal Information Extraction/Entailment) - Please search for the official COLIEE website and register to download the dataset"
+    expected_files:
+      - "train.json"
+      - "dev.json"
+      - "test.json"
+    task_type: "binary_qa"  # YES/NO questions
+    has_context: true
+    split:
+      train: "train.jsonl"
+      dev: "dev.jsonl"
+      test: "test.jsonl"
+    
+  alqa:
+    enabled: true
+    name: "Automated Legal Question Answering"
+    description: "Open-domain legal question answering"
+    source: "MANUAL_OR_URL"
+    official_info: "ALQA dataset - Please search for academic papers or official repositories to obtain this dataset"
+    expected_files:
+      - "alqa_train.json"
+      - "alqa_dev.json"
+      - "alqa_test.json"
+    task_type: "open_qa"  # Open-ended questions
+    has_context: false
+    split:
+      train: "train.jsonl"
+      dev: "dev.jsonl"
+      test: "test.jsonl"
+    
+  caselawqa:
+    enabled: true
+    name: "Case Law QA"
+    description: "Question answering over case law documents"
+    source: "MANUAL_OR_URL"
+    official_info: "CaseLawQA dataset - Please search for the official source or contact dataset authors"
+    expected_files:
+      - "caselawqa_train.json"
+      - "caselawqa_dev.json"
+      - "caselawqa_test.json"
+    task_type: "open_qa"
+    has_context: true
+    split:
+      train: "train.jsonl"
+      dev: "dev.jsonl"
+      test: "test.jsonl"
+
+# Schema for processed data
+# Each line in *.jsonl should contain:
+# {
+#   "id": str,              # Unique question ID
+#   "question": str,        # The question text
+#   "context": str|null,    # Optional legal context (statutes, case excerpts, etc.)
+#   "answer": str|dict,     # Ground truth answer (str for open QA, {"label": "YES"/"NO"} for binary)
+#   "split": str,           # "train", "dev", or "test"
+#   "dataset": str,         # Dataset name
+#   "metadata": dict        # Optional metadata
+# }
+
+
