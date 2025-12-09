@@ -4,8 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code Style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-**LegalAdapter** implements a **K-candidate generation + verifier re-ranking** framework for legal question answering. It improves accuracy and reduces hallucinations by generating multiple answers using diverse LLMs (OpenAI, xAI, Local models) and selecting the best one via a lightweight, trainable verifier.
-
+**LegalAdapter** implements a K-candidate generation + verifier re-ranking framework for legal question answering. It improves accuracy and reduces hallucinations by generating multiple answers using diverse LLMs (OpenAI, xAI, local models) and selecting the best one via a lightweight, trainable verifier, effectively mitigating the historically low accuracy of LLMs on legal-domain questions.
 > 🎓 **Course Project**: Final project for CS439 at Rutgers University.
 
 ## 🚀 Key Features
