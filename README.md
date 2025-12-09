@@ -12,7 +12,6 @@
 - **Multi-LLM Support**: OpenAI GPT-4, xAI Grok, local vLLM, and Ollama.
 - **Verifier Re-Ranking**: Trains a BERT-size model to score and select the best answer.
 - **Privacy Friendly**: Can run entirely on local hardware (open-source mode).
-- **Evaluation Metrics**: Accuracy, F1, Verifier AUC, and Hallucination Rate.
 
 ---
 
