@@ -84,13 +84,34 @@ python -m src.legaladapter.utils.create_test_data
 make test-quick
 ```
 
-You should see results like:
-```text
-Dataset: coliee_task4
-Accuracy: 0.6667
-F1: 0.7234
-AUC: 0.8500
+---
+
+## 📖 Training Details (How it Works)
+
+The system improves QA reliability through a two-stage process. Here is how the training and dataset loading works under the hood:
+
+### 1. Dataset Loading
+The system handles datasets defined in `configs/datasets.yaml` (e.g., COLIEE Task 4).
+- **Raw Data**: Questions and ground truth answers are loaded via `DatasetLoader`.
+- **Candidate Loading**: The training script (`train.py`) reads the generated candidates (from Step 1) located in `artifacts/candidates/`.
+- **Labeling**: It automatically labels each candidate as **Positive (1)** or **Negative (0)** by comparing it to the ground truth:
+  - **YES/NO Questions**: Checks if the candidate starts with the correct label.
+  - **Open-Ended Questions**: Computes F1 score against ground truth (Positive if F1 ≥ 0.5).
+
+### 2. Verifier Architecture
+The verifier is a BERT-based binary classifier (default: `microsoft/deberta-v3-base`).
+- **Input Format**: `[CLS] Question [SEP] Context [SEP] Candidate Answer [SEP]`
+- **Training Objective**: Minimizes Binary Cross-Entropy (BCE) loss.
+- **Optimization**: Uses AdamW optimizer with early stopping based on validation AUC.
+
+### 3. Training Command
+To train the verifier on your generated candidates:
+```bash
+python -m src.legaladapter.verify.train \
+  --config configs/models.yaml \
+  --datasets configs/datasets.yaml
 ```
+This saves the best model to `artifacts/verifier/best_model.pt`.
 
 ---
 
@@ -105,7 +126,7 @@ python -m src.legaladapter.gen.generate --split test
 ```
 
 ### 2. Train Verifier
-Train the scoring model on the training set:
+Train the scoring model on the training set (see details above):
 ```bash
 python -m src.legaladapter.verify.train
 ```
@@ -141,9 +162,3 @@ All results are saved in the `artifacts/` directory:
 ## 📝 License
 
 This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
-
----
-
-### Author
-**MikaWaifu** - *Rutgers CS439 Final Project*
-
